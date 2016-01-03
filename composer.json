@@ -4,12 +4,13 @@
     "keywords": ["testing","database","mysql","sqlite","mongodb"],
     "homepage": "http://phactory.org",
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "mongodb/mongodb": "^0.2.0"
     },
     "require-dev": {
         "ext-pdo": "*",
         "ext-pdo_sqlite": "*",
-        "ext-mongo": "*"
+        "ext-mongodb": "*"
     },
     "suggest": {
         "ext-pdo": "Allows use of Phactory for testing against SQL databases",

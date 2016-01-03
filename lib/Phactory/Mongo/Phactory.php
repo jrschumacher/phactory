@@ -16,25 +16,25 @@ class Phactory {
     /**
      * Constructs a Phactory object for testing MongoDB databases
      *
-     * @param \MongoDB $mongo A MongoDB database connection to test with
+     * @param \MongoDB\Database $mongo A MongoDB database connection to test with
      */
-    public function __construct(\MongoDB $mongo) {
+    public function __construct(\MongoDB\Database $mongo) {
         $this->_db = $mongo;
     }
 
     /*
      * Set the Mongo object to use for database connection.
      *
-     * @param object $db Mongo object
+     * @param \MongoDB\Database $db Mongo object
      */
-    public function setDb(\MongoDB $db) {
+    public function setDb(\MongoDB\Database $db) {
         $this->_db = $db;
     }
 
     /*
      * Get the Mongo database object.
      *
-     * @return object Mongo 
+     * @return object Mongo
      */
     public function getDb() {
         return $this->_db;
@@ -96,7 +96,7 @@ class Phactory {
      * overriding some or all of the default values.
      * The document is saved to the database, and returned as an array.
      *
-     * @param string $blueprint_name name of the blueprint to use 
+     * @param string $blueprint_name name of the blueprint to use
      * @param array $associations [collection name] => [array]
      * @param array $overrides key => value pairs of field => value
      * @return array
@@ -105,7 +105,7 @@ class Phactory {
         if(! ($blueprint = $this->_blueprints[$blueprint_name]) ) {
             throw new \Exception("No blueprint defined for '$blueprint_name'");
         }
-            
+
         return $blueprint->create($overrides, $associations);
     }
 
@@ -114,7 +114,7 @@ class Phactory {
      * overriding some or all of the default values.
      * The document is not saved to the database.
      *
-     * @param string $blueprint_name name of the blueprint to use 
+     * @param string $blueprint_name name of the blueprint to use
      * @param array $associations [collection name] => [array]
      * @param array $overrides key => value pairs of field => value
      * @return array
@@ -123,41 +123,41 @@ class Phactory {
         if(! ($blueprint = $this->_blueprints[$blueprint_name]) ) {
             throw new \Exception("No blueprint defined for '$blueprint_name'");
         }
-            
+
         return $blueprint->build($overrides, $associations);
     }
 
     /*
      * Get a document from the database as an array.
      *
-     * @param string $collection_name name of the collection 
+     * @param string $collection_name name of the collection
      * @param array $query a MongoDB query
-     * @return array 
+     * @return array
      */
-    public function get($collection_name, $query) {		
+    public function get($collection_name, $query) {
         if(!is_array($query)) {
             throw new \Exception("\$query must be an associative array of 'field => value' pairs");
         }
 
         $collection = new Collection($collection_name, true, $this);
-				
+
         return $collection->findOne($query);
     }
 
     /*
      * Get results from the database as a cursor.
      *
-     * @param string $collection_name name of the collection 
+     * @param string $collection_name name of the collection
      * @param array $query a MongoDB query
      * @return MongoCursor
      */
-    public function getAll($collection_name, $query = array()) {		
+    public function getAll($collection_name, $query = array()) {
         if(!is_array($query)) {
             throw new \Exception("\$query must be an associative array of 'field => value' pairs");
         }
 
         $collection = new Collection($collection_name, true, $this);
-				
+
         return $collection->find($query);
     }
 
